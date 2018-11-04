@@ -53,11 +53,11 @@
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:fontFamily="@font/newscycleregular"
         android:text="@string/_20_de_noviembre_512_centro_68000_oaxaca_oax"
-        android:textSize="13sp"
-        android:fontFamily="@font/newscycleregular"/>
+        android:textSize="13sp" />
 
     <TextView
         android:id="@+id/hora"

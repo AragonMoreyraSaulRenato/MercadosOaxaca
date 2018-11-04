@@ -15,8 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.oaxaca.turismo.mercados.MainActivity;
 import com.oaxaca.turismo.mercados.R;
 import com.oaxaca.turismo.mercados.activitys.Activity_Local;
+import com.oaxaca.turismo.mercados.clases.Categoria;
 
 import java.util.ArrayList;
 
@@ -31,86 +34,88 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
+    private Categoria categoria;
     private Context mContext;
-    private boolean typeHolder;
+    ExpandableTextView hist;
+    ExpandableTextView prod;
+    CircleImageView logo;
+    private TextView catego;
+    private TextView nombre;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> names, ArrayList<String> imageUrls, boolean typeHolder) {
-        mNames = names;
-        mImageUrls = imageUrls;
+
+    public RecyclerViewAdapter(Context context, Categoria categoria) {
         mContext = context;
-        this.typeHolder = typeHolder;
+        this.categoria = categoria;
+        hist = (ExpandableTextView) ((Activity) mContext).findViewById(R.id.historia);
+        prod = (ExpandableTextView) ((Activity) mContext).findViewById(R.id.productos);
+        logo = (CircleImageView) ((Activity) mContext).findViewById(R.id.logo);
+        catego = (TextView) ((Activity) mContext).findViewById(R.id.categoria);
+        nombre = (TextView) ((Activity) mContext).findViewById(R.id.nombreLocal);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
-        return new ViewHolder(view, typeHolder);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called.");
-        Glide.with(mContext).asBitmap().load(mImageUrls.get(position)).into(holder.image);
-        holder.name.setText(mNames.get(position));
+        String img = categoria.getLocales().get(position).getImageUrl();
+        if(img.contains("null") || img == null){
+            holder.image.setImageResource(R.mipmap.ic_launcher);
+        }else{
+            Glide.with(mContext).asBitmap().load(img).into(holder.image);
+        }
+        //holder.name.setText(categoria.getLocales().get(position).getNombre());
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    if(typeHolder){
-                        startIntent();
-                    }
-                    else{
                         openLocal(position);
-                    }
+
                 }catch (Exception e){
                     Log.d(TAG, e.toString());
                 }
-                Log.d(TAG, "onClick: clicked oputon an image: " + mNames.get(position));
-                Toast.makeText(mContext, mNames.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-    public void startIntent(){
-        mContext.startActivity(new Intent(mContext,Activity_Local.class));
-
-    }
     public void openLocal(int position){
-        TextView slogar = (TextView) ((Activity) mContext).findViewById(R.id.textSlogan);
-        slogar.setText("Estas dentro de local");
+        hist.setText(categoria.getLocales().get(position).getHistoria()+"");
+        prod.setText(categoria.getLocales().get(position).getProductos()+"");
 
+        String img = categoria.getLocales().get(position).getImageUrl();
+        if(img.contains("null") || img == null){
+            logo.setImageResource(R.mipmap.ic_launcher);
+        }else {
+            Glide.with(mContext).asBitmap().load(img).into(logo);
+        }
+
+        nombre.setText(categoria.getLocales().get(position).getNombre()+"");
+        catego.setText(categoria.getNombre()+"");
     }
 
     @Override
     public int getItemCount() {
-        return mImageUrls.size();
+        return categoria.getLocales().size();
     }
 
     @Override
     public long getItemId(int position) {
-        Toast.makeText(mContext,"Position == " + position, Toast.LENGTH_SHORT).show();
         return super.getItemId(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         CircleImageView image;
-        TextView name;
+        //TextView name;
         RelativeLayout layout;
 
-        public ViewHolder(View itemView, boolean i) {
+        public ViewHolder(View itemView) {
             super(itemView);
             layout = itemView.findViewById(R.id.layout);
             image = itemView.findViewById(R.id.image_view);
-            name = itemView.findViewById(R.id.name);
-
-            if(i){
-                name.setTextColor(Color.BLACK);
-                image.setBorderColor(Color.rgb(253,113,157));
-            }
-
+            //name = itemView.findViewById(R.id.name);
         }
     }
 }

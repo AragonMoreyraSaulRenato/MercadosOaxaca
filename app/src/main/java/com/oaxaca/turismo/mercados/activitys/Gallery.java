@@ -58,7 +58,8 @@ public class Gallery extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        recyclerView.addOnItemTouchListener(new GalleryAdapter.RecyclerTouchListener(getActivity(), recyclerView, new GalleryAdapter.ClickListener() {
+        recyclerView.addOnItemTouchListener(new GalleryAdapter.RecyclerTouchListener(getActivity(),
+                recyclerView, new GalleryAdapter.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Bundle bundle = new Bundle();
@@ -73,8 +74,8 @@ public class Gallery extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-
             }
+
         }));
 
         refresh();
@@ -86,11 +87,11 @@ public class Gallery extends Fragment {
         for (int i = 0; i < im.size(); i++) {
             try {
                 Image image = new Image();
-                image.setName("H");
+                image.setName(" ");
                 image.setSmall(im.get(i));
                 image.setMedium(im.get(i));
                 image.setLarge(im.get(i));
-                image.setTimestamp("H");
+                image.setTimestamp(" ");
                 images.add(image);
             } catch (Exception e) {
                 e.printStackTrace();

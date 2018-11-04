@@ -1,6 +1,5 @@
 package com.oaxaca.turismo.mercados.adapter;
 
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -9,18 +8,21 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.oaxaca.turismo.mercados.clases.MenuModel;
+import com.bumptech.glide.Glide;
 import com.oaxaca.turismo.mercados.R;
+import com.oaxaca.turismo.mercados.clases.MenuModel;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class Adaptador_ListaExpandible extends BaseExpandableListAdapter {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class AdaptadorListaExpandible extends BaseExpandableListAdapter {
     private Context context;
     private List<MenuModel> listDataHeader;
     private HashMap<MenuModel, List<MenuModel>> listDataChild;
 
-    public Adaptador_ListaExpandible(Context context, List<MenuModel> listDataHeader,
+    public AdaptadorListaExpandible(Context context, List<MenuModel> listDataHeader,
                                      HashMap<MenuModel, List<MenuModel>> listChildData) {
         this.context = context;
         this.listDataHeader = listDataHeader;
@@ -43,17 +45,21 @@ public class Adaptador_ListaExpandible extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         final String childText = getChild(groupPosition, childPosition).menuName;
-
+        final String imgUrl = getChild(groupPosition,childPosition).url;
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_group_child, null);
+            convertView = infalInflater.inflate(R.layout.list_group_child_categoria, null);
         }
 
         TextView txtListChild = convertView
                 .findViewById(R.id.lblListItem);
+        CircleImageView circleImageView = convertView.
+                findViewById(R.id.imgListItem);
+
 
         txtListChild.setText(childText);
+        Glide.with(context).asBitmap().load(imgUrl).into(circleImageView);
         return convertView;
     }
 
@@ -90,7 +96,7 @@ public class Adaptador_ListaExpandible extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_group_header, null);
+            convertView = infalInflater.inflate(R.layout.list_group_header_categoria, null);
         }
 
         TextView lblListHeader = convertView.findViewById(R.id.lblListHeader);
@@ -109,4 +115,5 @@ public class Adaptador_ListaExpandible extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
 }

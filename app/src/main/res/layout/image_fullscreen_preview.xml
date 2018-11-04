@@ -3,13 +3,14 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="@color/colornegro">
 
     <ImageView
         android:id="@+id/image_preview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_centerInParent="true"
+        android:background="@color/colornegro"
         android:scaleType="fitCenter" />
 
 </RelativeLayout>

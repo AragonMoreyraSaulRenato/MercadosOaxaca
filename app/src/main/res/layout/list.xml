@@ -4,11 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <!--android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recy"
         android:scrollbars="vertical"
         android:paddingBottom="5dp"
-        />
+        /-->
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recy"
+        android:scrollbars="vertical">
+    </ExpandableListView>
 </android.support.constraint.ConstraintLayout>

@@ -3,21 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="60dp"
     android:background="#ffffff"
     android:orientation="vertical">
     <!--M E N U
     android:paddingRight="?attr/listPreferredItemPaddingRight"-->
-
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="9dp"
-        android:layout_y="14dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/flecha_abajo" />
 
     <TextView
         android:id="@+id/lblListHeader"
@@ -29,7 +19,7 @@
         android:gravity="start"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:paddingStart="@dimen/activity_vertical_margin"
-        android:textColor="@color/colorPulso"
+        android:textColor="@color/colorNaranja"
         android:textSize="16dp" />
 
 </AbsoluteLayout>

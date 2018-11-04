@@ -56,8 +56,8 @@ public class SlideshowDialogFragment extends DialogFragment {
         lblTitle = (TextView) v.findViewById(R.id.title);
         lblDate = (TextView) v.findViewById(R.id.date);
 
-        share = (ImageView) v.findViewById(R.id.share);
-        download = (ImageView) v.findViewById(R.id.download);
+       // share = (ImageView) v.findViewById(R.id.share);
+       // download = (ImageView) v.findViewById(R.id.download);
 
         final ImageView imageViewPreview = (ImageView) v.findViewById(R.id.image_preview);
 
@@ -72,7 +72,7 @@ public class SlideshowDialogFragment extends DialogFragment {
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
         setCurrentItem(selectedPosition);
-
+/*
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +85,7 @@ public class SlideshowDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 String url = setImgLink;
             }
-        });
+        });*/
 
         return v;
     }
@@ -147,7 +147,7 @@ public class SlideshowDialogFragment extends DialogFragment {
     };
 
     private void displayMetaInfo(int position) {
-        lblCount.setText((position + 1) + " of " + images.size());
+        lblCount.setText((position + 1) + " de " + images.size());
 
         Image image = images.get(position);
         lblTitle.setText(image.getName());

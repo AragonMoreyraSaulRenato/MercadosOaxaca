@@ -49,11 +49,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Image image = images.get(position);
 
-        /*Glide.with(mContext).load(image.getMedium())
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.thumbnail);*/
         Glide.with(mContext).load(image.getMedium())
                 .thumbnail(0.5f)
                 .transition(withCrossFade())

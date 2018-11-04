@@ -36,6 +36,7 @@ import com.oaxaca.turismo.mercados.clases.Categoria;
 import com.oaxaca.turismo.mercados.clases.Local;
 import com.oaxaca.turismo.mercados.clases.MenuModel;
 import com.oaxaca.turismo.mercados.clases.Mercado;
+import com.oaxaca.turismo.mercados.clases.Zonas;
 import com.oaxaca.turismo.mercados.conexion.Peticiones;
 
 import org.json.JSONArray;
@@ -43,6 +44,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 public class principal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,20 +63,15 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
     static JSONObject infomer;
     static JSONObject galeri;
     static JSONObject giros;
-    private double lo,la;
+    private double lo=-96.727260,la=17.057874;
     String seleccionado;
     int selecc;
-    Notification.Builder builder;
+    String nombreMercado;
     NotificationManager nm;
-
-
-
     Head comi;
     Gallery comi2;
     Lista comi3;
-
     Context mContext;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onClick(View v) {
                 try {
-                    String labelLocation = "VISITA OAXACA:"+seleccionado;
+                    String labelLocation = "VISITA OAXACA: "+seleccionado;
                     String uri = "geo:<" + la+ ">,<" + lo+ ">?q=<" +la + ">,<" + lo+ ">(" + labelLocation + ")";
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                     startActivity(intent);
@@ -139,6 +139,8 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
             super.onBackPressed();
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,85 +177,29 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
 
     //metodo que genera la barra de navegacion segun las arreglos
     private void prepareMenuData() {
-        int i=0;
+
         MenuModel childModel;
-        List<MenuModel> childModelsList = new ArrayList<>();
-        headerList = new ArrayList<>();
-        MenuModel menuModel = new MenuModel("Zona Centro Histórico", true, true, "",i); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        i++;
-        for(int j=0; j<mercadosch.size(); j++){
-            childModel  = new MenuModel(mercadosch.get(j).getNombre(), false, false, "",i);
-            childModelsList.add(childModel);
-            i++;}
-        if (menuModel.hasChildren) {
-            Log.d("API123", "here");
-            childList.put(menuModel, childModelsList); }
-        //---
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel("Zona Centro", true, true, "",i); //Menu of Python Tutorials
-        headerList.add(menuModel);
-        i++;
-        for(int j=0; j<mercadosc.size(); j++){
-            childModel  = new MenuModel(mercadosc.get(j).getNombre(), false, false, "",i);
-            childModelsList.add(childModel);
-            i++; }
-
-        if (menuModel.hasChildren) {
-            childList.put(menuModel, childModelsList); }
-        //----
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel("Zona Norte", true, true, "",i); //Menu of Python Tutorials
-        headerList.add(menuModel);
-        i++;
-        for(int j=0; j<mercadosn.size(); j++){
-            childModel  = new MenuModel(mercadosn.get(j).getNombre(), false, false, "",i);
-            childModelsList.add(childModel);
-            i++; }
-
-        if (menuModel.hasChildren) {
-            childList.put(menuModel, childModelsList); }
-        //--
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel("Zona Sur", true, true, "",i); //Menu of Python Tutorials
-        headerList.add(menuModel);
-        i++;
-        for(int j=0; j<mercadoss.size(); j++){
-            childModel  = new MenuModel(mercadoss.get(j).getNombre(), false, false, "",i);
-            childModelsList.add(childModel);
-            i++; }
-        if (menuModel.hasChildren) {
-            childList.put(menuModel, childModelsList);
+        for(int i=0; i<mercadostotal.size(); i++) {
+            List<MenuModel> childModelsList = new ArrayList<>();
+            MenuModel menuModel = new MenuModel(mercadostotal.get(i).getNombre(), true, true, "", i); //Menu of Java Tutorials
+            headerList.add(menuModel);
+            for (int j = 0; j < mercadostotal.get(i).getMercados().size(); j++) {
+                childModel = new MenuModel(mercadostotal.get(i).getMercados().get(j).getNombre(), false,
+                        false,"", i);
+                childModelsList.add(childModel);
+            }
+            if (menuModel.hasChildren) {
+                Log.d("API123", "here");
+                childList.put(menuModel, childModelsList);
+            }
         }
-        //-----
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel("Zona Poniente", true, true, "",i); //Menu of Python Tutorials
-        headerList.add(menuModel);
-        i++;
-        for(int j=0; j<mercadosp.size(); j++){
-            childModel  = new MenuModel(mercadosp.get(j).getNombre(), false, false, "",i);
-            childModelsList.add(childModel);
-            i++; }
-
-        if (menuModel.hasChildren) {
-            childList.put(menuModel, childModelsList); }
-        //----
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel("Zona Oriente", true, true, "",i); //Menu of Python Tutorials
-        headerList.add(menuModel);
-        i++;
-        for(int j=0; j<mercadoso.size(); j++){
-            childModel  = new MenuModel(mercadoso.get(j).getNombre(), false, false, "",i);
-            childModelsList.add(childModel);
-            i++; }
-
-        if (menuModel.hasChildren) {
-            childList.put(menuModel, childModelsList); }
     }
 
     Peticiones peticion2,peticion3, peticion4;
     int i=0;
 
+
+    boolean bandera = true;
 
     //metodo que controla el funcionamiento de la barra de navegacion
     private void populateExpandableList(){
@@ -278,42 +224,14 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
                     seleccionado=model.getMenuName();
+                    for(int i=0; i<mercadostotal.size(); i++) {
+                        for (int j = 0; j < mercadostotal.get(i).getMercados().size(); j++) {
+                            if(mercadostotal.get(i).getMercados().get(j).getNombre().equals(model.getMenuName())){
+                                la=mercadostotal.get(i).getMercados().get(j).getLatitud();
+                                lo=mercadostotal.get(i).getMercados().get(j).getLongitud();
+                                selecc=mercadostotal.get(i).getMercados().get(j).getId_mercado();}
+                        }
 
-                    for(Mercado mer: mercadosc){
-
-                        if(mer.getNombre().equals(model.getMenuName())){
-                            la=mer.getLatitud();
-                            lo=mer.getLongitud();
-                            selecc=mer.getId_mercado();}
-                    }
-                    for(Mercado mer: mercadosch){
-                        if(mer.getNombre().equals(model.getMenuName())){
-                            la=mer.getLatitud();
-                            lo=mer.getLongitud();
-                            selecc=mer.getId_mercado();}
-                    }
-                    for(Mercado mer: mercadosn){
-                        if(mer.getNombre().equals(model.getMenuName())){
-                            la=mer.getLatitud();
-                            lo=mer.getLongitud();
-                            selecc=mer.getId_mercado(); }
-                    }
-                    for(Mercado mer: mercadoss){
-                        if(mer.getNombre().equals(model.getMenuName())){
-                            la=mer.getLatitud();
-                            lo=mer.getLongitud();
-                            selecc=mer.getId_mercado();}
-                    }
-                    for(Mercado mer: mercadoso){
-                        if(mer.getNombre().equals(model.getMenuName())){
-                            la=mer.getLatitud();
-                            lo=mer.getLongitud();
-                            selecc=mer.getId_mercado();}
-                    }for(Mercado mer: mercadosp){
-                        if(mer.getNombre().equals(model.getMenuName())){
-                            la=mer.getLatitud();
-                            lo=mer.getLongitud();
-                            selecc=mer.getId_mercado();}
                     }
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
@@ -328,9 +246,11 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                     peticion4 = new Peticiones(getApplicationContext(),
                             MainActivity.getBase_url()+"Mercado/localesDelMercado/"+MainActivity.getLlave()+"/"+selecc);
 
+                    bandera = true;
+
                     new Thread() {
                         public void run() {
-                            while (i<1000) {
+                            while (bandera) {
                                 try {
                                     runOnUiThread(new Runnable() {
 
@@ -339,12 +259,18 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                                             if(peticion2.getBanderita() && peticion3.getBanderita() && peticion4.getBanderita()) {
                                                 principal.infomer = peticion2.getJSON();
                                                 principal.galeri = peticion3.getJSON();
-                                                comi.setMercado(getMercado());
+                                                principal.giros = peticion4.getJSON();
+                                                Mercado m  = getMercado();
+                                                comi.setMercado(m);
                                                 comi.refresh();
+
                                                 comi2.setArrayImages(getGaleria());
                                                 comi2.refresh();
-                                                comi3.setArrayCategoria(getCategorias());
+
+                                                comi3.setArrayCategoria(getCategorias(),m.getNombre());
                                                 comi3.refresh();
+
+                                                bandera = false;
                                             }
                                         }
                                     });
@@ -354,6 +280,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                                     e.printStackTrace();
                                 }
                                 i++;
+
                             }
 
 
@@ -368,18 +295,12 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
 
 
 
-    private ArrayList<Mercado> mercadosch;
-    private ArrayList<Mercado> mercadosc;
-    private  ArrayList<Mercado> mercadosn;
-    private  ArrayList<Mercado> mercadoss;
-    private ArrayList<Mercado> mercadoso;
-    private  ArrayList<Mercado> mercadosp;
+    private ArrayList<Zonas> mercadostotal;
 
     private void obtenerlosmercadosparaelmenu(){
-        mercadosch = new ArrayList<Mercado>();mercadosc = new ArrayList<Mercado>();
-        mercadoss = new ArrayList<Mercado>();mercadosn = new ArrayList<Mercado>();
-        mercadoso = new ArrayList<Mercado>();mercadosp = new ArrayList<Mercado>();
-
+       mercadostotal = new ArrayList<Zonas>();
+       String zonaactua="";
+       ArrayList<Mercado> mercadostt = new ArrayList<Mercado>();
         JSONObject objJson = lista;
         try{
             JSONArray listaJson = objJson.optJSONArray("mercados");
@@ -388,28 +309,52 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                 int id_m = obj_dato.getInt("idMercado");
                 String nombre = obj_dato.getString("nombre");
                 String zona = obj_dato.getString("zona");
+                switch (zona){
+                    case "C": zona="Zona Centro"; break;
+                    case "CH": zona="Zona Centro Historico";break;
+                    case "S": zona="Zona Sur";break;
+                    case "O": zona="Zona Oriente";break;
+                    case "N": zona="Zona Norte";break;
+                    case "P": zona="Zona Poniente";break;
+                }
+
                 Double latitudm = obj_dato.getDouble("latitud");
                 Double longitudm = obj_dato.getDouble("longitud");
-
                 Mercado temp = new Mercado(id_m, nombre, zona, latitudm, longitudm);
 
-                if (zona.equals("CH")) {
-                    mercadosch.add(temp);
-                } else if (zona.equals("C")) {
-                    mercadosc.add(temp);
-                } else if (zona.equals("S")) {
-                    mercadoss.add(temp);
-                } else if (zona.equals("N")) {
-                    mercadosn.add(temp);
-                } else if (zona.equals("O")) {
-                    mercadoso.add(temp);
-                } else if (zona.equals("P")) {
-                    mercadosp.add(temp);
+                mercadostt.add(temp);
+
+            }
+            while(mercadostt.size()>0){
+                ArrayList<Mercado> t = new ArrayList<>();
+                zonaactua = mercadostt.get(0).getZona();
+                Mercado x = mercadostt.get(0);
+                t.add(x);
+                mercadostt.remove(0);
+                for(int j=0; j<mercadostt.size(); j++){
+                    if(zonaactua.equalsIgnoreCase(mercadostt.get(j).getZona())){
+                        Mercado x2 = mercadostt.get(j);
+                        t.add(x2);
+                        mercadostt.remove(j);
+                        j--;
+                    }
                 }
+                Collections.sort(t, new Comparator<Mercado>() {
+                    public int compare(Mercado obj1, Mercado obj2) {
+                        return obj1.getNombre().compareTo(obj2.getNombre());
+                    }
+                });
+                mercadostotal.add(new Zonas(zonaactua,t));
             }
         }catch (Exception ex){
             Toast.makeText(this,ex.toString(),Toast.LENGTH_LONG).show();
         }
+        Collections.sort(mercadostotal, new Comparator<Zonas>() {
+            public int compare(Zonas obj1, Zonas obj2) {
+                return obj1.getNombre().compareTo(obj2.getNombre());
+            }
+        });
+        //Collections.sort(mercadostotal);
         if(objJson!=null){
             prepareMenuData();
             populateExpandableList();
@@ -451,23 +396,35 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
     public ArrayList<Categoria> getCategorias(){
         ArrayList<Categoria> cate = new ArrayList<>();
         ArrayList<Local> l = new ArrayList<>();
-        int contArray = 0;
         try {
             String categoriaActual = "";
             JSONArray listaJson = giros.optJSONArray("locales");
             for(int i=0; i<listaJson.length(); i++){
                 JSONObject obj_dato = listaJson.getJSONObject(i);
-                if(i == 0) categoriaActual = obj_dato.getString("nombreGiro");
-                if(categoriaActual.equals(obj_dato.getString("nombreGiro"))){
-                    l.add(new Local(Integer.parseInt(obj_dato.getString("idLocal")),
-                            obj_dato.getString("nombre"),
-                            obj_dato.getString("nombreGiro"),
-                            obj_dato.getString("imagen")));
+                Local local = new Local(Integer.parseInt(obj_dato.getString("idLocal")),
+                        obj_dato.getString("nombre"),
+                        obj_dato.getString("nombreGiro"),
+                        MainActivity.getBase_url()+obj_dato.getString("imagen"),
+                        obj_dato.getString("historia"),
+                        obj_dato.getString("tags"));
+                l.add(local);
+            }
+
+            while(l.size()>0){
+                ArrayList<Local> t = new ArrayList<>();
+                categoriaActual = l.get(0).getNombreGiro();
+                Local x = l.get(0);
+                t.add(x);
+                l.remove(0);
+                for(int j=0; j<l.size(); j++){
+                    if(categoriaActual.equalsIgnoreCase(l.get(j).getNombreGiro())){
+                        Local x2 = l.get(j);
+                        t.add(x2);
+                        l.remove(j);
+                        j--;
+                    }
                 }
-                else{
-                    cate.add(new Categoria(categoriaActual,l));
-                    l.clear();
-                }
+                cate.add(new Categoria(categoriaActual,t));
             }
         }catch (JSONException e){
             e.printStackTrace();
@@ -488,16 +445,16 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
 
         @Override
         public Fragment getItem(int position) {
-
+            Mercado m = getMercado();
             switch (position) {
                 case 0:
-                    comi.setMercado(getMercado());
+                    comi.setMercado(m);
                     return comi;
                 case 1:
                     comi2.setArrayImages(getGaleria());
                     return comi2;
                 case 2:
-                    comi3.setArrayCategoria(getCategorias());
+                    comi3.setArrayCategoria(getCategorias(),m.getNombre());
                     return comi3;
             }
 
