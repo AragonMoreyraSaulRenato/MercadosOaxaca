@@ -7,4 +7,7 @@
     <color name="colorPulso">#fd719d</color>
     <color name="colornegro">#000000</color>
     <color name="colorNaranja">#F78E06</color>
+    <color name="coloroscurito">#CAC6BD</color>
+    <color name="colortarget">#f8f7f7</color>
+
 </resources>

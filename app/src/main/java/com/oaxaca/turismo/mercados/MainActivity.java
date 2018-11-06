@@ -1,10 +1,8 @@
 package com.oaxaca.turismo.mercados;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ProgressBar;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.oaxaca.turismo.mercados.conexion.Peticiones;
@@ -26,14 +24,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 Peticiones peticion = new Peticiones(getApplicationContext(),base_url+"Mercado/mercados/"+llave);
-                Peticiones peticion2 = new Peticiones(getApplicationContext(),base_url+"Mercado/mercadoById/"+llave+"/"+8);
-                Peticiones peticion3 = new Peticiones(getApplicationContext(),base_url+"Mercado/imgFromMercado/"+llave+"/"+8);
-                Peticiones peticion4 = new Peticiones(getApplicationContext(),base_url+"Mercado/localesDelMercado/"+llave+"/"+8);
+                Peticiones peticion2 = new Peticiones(getApplicationContext(),base_url+"Mercado/imgsMercados/"+llave);
 
-                while (!peticion.getBanderita() ||
-                        !peticion2.getBanderita() ||
-                        !peticion3.getBanderita() ||
-                        !peticion4.getBanderita()){
+                while (!peticion.getBanderita() || !peticion2.getBanderita()  ){
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -41,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 principal.lista=peticion.getJSON();
-                principal.infomer=peticion2.getJSON();
-                principal.galeri=peticion3.getJSON();
-                principal.giros = peticion4.getJSON();
+                MenuActivity.listam=peticion.getJSON();
+                MenuActivity.urlimg=peticion2.getJSON();
+
                 Intent intent = null;
-                if(principal.lista!=null && principal.infomer!=null && principal.galeri!=null && principal.giros!=null)
+                if(MenuActivity.listam!=null && MenuActivity.urlimg!=null )
                 {
-                    intent = new Intent(getApplicationContext(), principal.class);
+                    intent = new Intent(getApplicationContext(), MenuActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -86,4 +79,3 @@ public class MainActivity extends AppCompatActivity {
         return llave;
     }
 }
-

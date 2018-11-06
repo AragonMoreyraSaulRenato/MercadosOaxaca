@@ -11,4 +11,5 @@
     <dimen name="title1">20dp</dimen>
     <dimen name="title2">18dp</dimen>
     <dimen name="title3">12dp</dimen>
+    <dimen name="card_padding">60dp</dimen>
 </resources>

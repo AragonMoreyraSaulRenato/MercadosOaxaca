@@ -15,4 +15,6 @@
     <string name="error_conexion">Verifique su conexión a internet</string>
     <string name="instala_nave">No se reconoce alguna aplicación de mapas </string>
     <string name="texto_inicial">¿A dónde será tu siguiente aventura?</string>
+
+
 </resources>

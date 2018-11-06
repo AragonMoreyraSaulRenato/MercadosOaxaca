@@ -4,19 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.oaxaca.turismo.mercados.MainActivity;
 import com.oaxaca.turismo.mercados.R;
 import com.oaxaca.turismo.mercados.adapter.RecyclerViewAdapter;
-import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.oaxaca.turismo.mercados.clases.Categoria;
-
-import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
