@@ -1,12 +1,9 @@
 package com.oaxaca.turismo.mercados;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -44,8 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -81,7 +76,6 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -108,6 +102,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
         comi = new Head() ;
         comi2 = new Gallery();
         comi3 = new Lista();
+
     }
 
 
@@ -219,7 +214,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, final int childPosition, long id) {
 
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
@@ -229,7 +224,9 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                             if(mercadostotal.get(i).getMercados().get(j).getNombre().equals(model.getMenuName())){
                                 la=mercadostotal.get(i).getMercados().get(j).getLatitud();
                                 lo=mercadostotal.get(i).getMercados().get(j).getLongitud();
-                                selecc=mercadostotal.get(i).getMercados().get(j).getId_mercado();}
+                                selecc=mercadostotal.get(i).getMercados().get(j).getId_mercado();
+
+                            }
                         }
 
                     }
@@ -247,7 +244,10 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                             MainActivity.getBase_url()+"Mercado/localesDelMercado/"+MainActivity.getLlave()+"/"+selecc);
 
                     bandera = true;
-
+                    final ProgressDialog progress =new ProgressDialog(principal.this);
+                    progress.setMessage("Descargando Informacion");
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.show();
                     new Thread() {
                         public void run() {
                             while (bandera) {
@@ -256,6 +256,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
 
                                         @Override
                                         public void run() {
+
                                             if(peticion2.getBanderita() && peticion3.getBanderita() && peticion4.getBanderita()) {
                                                 principal.infomer = peticion2.getJSON();
                                                 principal.galeri = peticion3.getJSON();
@@ -269,7 +270,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
 
                                                 comi3.setArrayCategoria(getCategorias(),m.getNombre());
                                                 comi3.refresh();
-
+                                                progress.cancel();
                                                 bandera = false;
                                             }
                                         }
@@ -291,6 +292,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                 return false;
             }
         });
+
     }
 
 

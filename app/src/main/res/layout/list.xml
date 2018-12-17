@@ -11,10 +11,14 @@
         android:scrollbars="vertical"
         android:paddingBottom="5dp"
         /-->
+
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recy"
-        android:scrollbars="vertical">
-    </ExpandableListView>
+        android:scrollbars="vertical"
+        android:paddingBottom="90dp"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"
+        />
 </android.support.constraint.ConstraintLayout>

@@ -22,25 +22,22 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Lista extends Fragment  {
-
     ArrayList<Categoria> cate;
     String nombre;
-
-
     AdaptadorListaExpandible expandableListAdapter;
     ExpandableListView expandableListView;
     List<MenuModel> headerList = new ArrayList<>();
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
     @Nullable
     @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list, container, false);
 
 
         expandableListView = (ExpandableListView) view.findViewById(R.id.recy);
         expandableListAdapter = new AdaptadorListaExpandible(getContext(), headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
-
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent,
@@ -48,16 +45,14 @@ public class Lista extends Fragment  {
                                         int childPosition, long id) {
                 Activity_Local.categoria = cate.get(groupPosition);
                 Activity_Local.c = childPosition;
-                    Intent intento = new Intent(getContext(),Activity_Local.class);
-                    intento.putExtra("nombre",nombre);
-                    startActivity(intento);
+                Intent intento = new Intent(getContext(),Activity_Local.class);
+                intento.putExtra("nombre",nombre);
+                startActivity(intento);
                 return false;
             }
         });
-
         refresh();
         return view;
-
     }
 
     public void setArrayCategoria(ArrayList<Categoria> arrayCategoria, String nombre){

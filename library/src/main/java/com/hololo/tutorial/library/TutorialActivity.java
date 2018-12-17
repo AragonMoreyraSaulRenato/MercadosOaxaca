@@ -58,7 +58,7 @@ public abstract class TutorialActivity extends AppCompatActivity implements View
     private void initTexts() {
         prevText = "Atras";
         cancelText = "Omitir";
-        finishText = "Salir";
+        finishText = "Terminar";
         nextText = "Siguiente";
         givePermissionText = "Give";
     }
@@ -114,8 +114,8 @@ public abstract class TutorialActivity extends AppCompatActivity implements View
             preparePermissionView();
         }
 
-        containerLayout.setBackgroundColor(steps.get(position).getBackgroundColor());
-        buttonContainer.setBackgroundColor(steps.get(position).getBackgroundColor());
+        //containerLayout.setBackgroundColor(steps.get(position).getBackgroundColor());
+        //buttonContainer.setBackgroundColor(steps.get(position).getBackgroundColor());
     }
 
     private void prepareNormalView() {

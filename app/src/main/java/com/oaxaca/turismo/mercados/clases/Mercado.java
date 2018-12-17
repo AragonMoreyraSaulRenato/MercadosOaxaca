@@ -1,6 +1,5 @@
 package com.oaxaca.turismo.mercados.clases;
 
-import android.support.annotation.NonNull;
 
 public class Mercado  {
     private int id_mercado;

@@ -12,9 +12,9 @@ import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
-    static String base_url = "http://hernandezislasadrian.000webhostapp.com/";
+    //static String base_url = "http://hernandezislasadrian.000webhostapp.com/";
+    static String base_url = "http://www.mercadosoaxacadejuarez.com/";
     static String llave="r5da3dfd0dssw4hfohu9fdgrv14";
-    //static String base_url = "http:/10.0.0.13/";
 
 
     @Override
@@ -45,11 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
                 else{
-                    System.out.println("PETICIONES:  \nLISTA: "+principal.lista+
-                            "\nLISTA: "+principal.infomer +
-                            "\nGALERIA: "+principal.galeri+
-                            "\nGIROS: "+principal.giros
-                    );
+
                     TimerTask timerTask = new TimerTask() {
                         int cont = 3;
                         @Override

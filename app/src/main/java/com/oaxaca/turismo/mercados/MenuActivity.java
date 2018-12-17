@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oaxaca.turismo.mercados.clases.Mercado;
@@ -17,14 +16,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity  {
+public class MenuActivity extends AppCompatActivity {
     static JSONObject listam,urlimg;
     static ArrayList<Mercado> mercad = new ArrayList<Mercado>();
     private ViewPager mViewPager;
-
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +45,11 @@ public class MenuActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),tutorialActivity.class);
                 startActivity(i);
+
             }
         });
     }
+
 
     private void crearCartasMercados() {
         JSONObject objJson = listam;
@@ -90,4 +89,6 @@ public class MenuActivity extends AppCompatActivity  {
     protected void onResume() {
         super.onResume();
     }
+
+
 }

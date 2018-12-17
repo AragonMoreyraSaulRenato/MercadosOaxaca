@@ -12,6 +12,8 @@
     <style name="AppTheme.splashh" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splasscreen</item>
     </style>
+
+
     <style name="AppThemeMenu" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorAccent</item>

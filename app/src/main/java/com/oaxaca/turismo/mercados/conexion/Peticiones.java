@@ -15,6 +15,7 @@ import org.json.JSONObject;
 public class Peticiones {
     public boolean banderita=false;
     public  Context contx;
+    public boolean veces=true;
     public Peticiones (Context contexto,String pet){
         contx=contexto;
         getPetitions(pet);
@@ -41,6 +42,7 @@ public  JSONObject loquellega;
         VolleySingleton.getInstanciaVolley(contx).addToRequestQueue(objetojson);
         objetojson.setRetryPolicy(new DefaultRetryPolicy(400000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
 

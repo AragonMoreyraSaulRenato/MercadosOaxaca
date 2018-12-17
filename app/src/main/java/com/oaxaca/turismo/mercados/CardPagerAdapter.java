@@ -1,5 +1,6 @@
 package com.oaxaca.turismo.mercados;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
@@ -16,7 +17,6 @@ import com.oaxaca.turismo.mercados.conexion.Peticiones;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.oaxaca.turismo.mercados.MainActivity.base_url;
 import static com.oaxaca.turismo.mercados.MainActivity.llave;
 
@@ -25,8 +25,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     private List<CardView> mViews;
     private List<CardItem> mData;
     private float mBaseElevation;
-    private Context estees ;
-
+    private static Context estees ;
+    public static boolean bandera=true;
 
     public CardPagerAdapter() {
         mData = new ArrayList<>();
@@ -85,22 +85,29 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     private void bind(CardItem item, View view) {
         TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
         titleTextView.setText(item.getTitle());
-        ImageButton button = (ImageButton) view.findViewById(R.id.ver);
+        final ImageButton button = (ImageButton) view.findViewById(R.id.ver);
 
         Glide.with(estees).asBitmap().load(item.getUrlimagen()).into(button);
         final int nnumeroid = item.getIdmercado();
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                hacerprti(nnumeroid);
-            }
-        });
+
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if(bandera){
+                        bandera=false;
+                        hacerprti(nnumeroid);
+                    }
+                }
+            });
+
+
 
     }
 
-
-
-    public void hacerprti(final int ihm){
-
+    public static void hacerprti(final int ihm){
+        final ProgressDialog progress =new ProgressDialog(estees);
+        progress.setMessage("Descargando Informacion");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
         Thread hilo = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -125,6 +132,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                 Intent intent = null;
                 if(principal.lista!=null && principal.infomer!=null && principal.galeri!=null && principal.giros!=null)
                 {
+                    bandera=true;
+                    progress.cancel();
                     intent = new Intent(estees, principal.class);
                     estees.startActivity(intent);
 
@@ -133,4 +142,5 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         });
         hilo.start();
     }
+
 }

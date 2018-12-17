@@ -36,7 +36,6 @@
             android:name=".MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeMenu" />
-
         <activity android:name=".tutorialActivity" />
 
         <service android:name=".clases.MyFirebaseInstanceIdService">

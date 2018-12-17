@@ -89,7 +89,7 @@
                 android:text="@string/historia"
                 android:textSize="15sp" />
 
-            <io.behindthemath.justifiedtextview.JustifiedTextView
+            <TextView
                 android:id="@+id/history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,7 +100,6 @@
                 android:lineSpacingExtra="10dp"
                 android:layout_marginBottom="80dp"
                 android:fontFamily="@font/quicksandmedium"
-                style=""
                 android:text="La construcción del mercado se inicio en marzo del año 1862 concluyéndose en 1882, el motivo de la realización de este mercado se debe a que años atrás la Plaza de las Armas y Plazuela de los Cantaros eran ocupadas por vendedores que día con día ponían su tianguis para vender sus productos, con el paso de los años La Plazuela de los Cantaros fue convertida en Alameda de León, hecho que llevo a los comerciantes a abandonar el lugar, los cuales se ubicaron en la Plaza del Marqués (mercado Benito Juárez), cuando la Plaza de las Armas se convirtió en Zócalo los comerciantes restantes se ubicaron en la misma plaza, ocasionando que no hubiera lugar suficiente para todos."/>
 
         </LinearLayout>

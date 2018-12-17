@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.oaxaca.turismo.mercados.MainActivity;
@@ -30,27 +31,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
     Bitmap bitmap;
-
     /**
      * se llama cuando se recibe un mensaje
      * @param remoteMessage Object representa el mensaje recibido de  Firebase Cloud Messaging.
      */
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         String mensaje = remoteMessage.getData().get("mensaje");
         String imagenUri = remoteMessage.getData().get("imagen");
-
         //Para obtener el Bitmap de la imagen desde la URL recibida
         try {
             bitmap = getBitmapfromUrl(imagenUri);
-            enviarNotificaciones(mensaje, bitmap);
+            enviarNotificaciones(mensaje, bitmap,imagenUri);
         }catch (Exception e){
-
         }
-
     }
 
 
@@ -58,7 +53,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * Crear y mostrar una simple notificacion con el contenido del mensaje FCM.
      */
 
-    private void enviarNotificaciones(String messageBody, Bitmap image) {
+    private void enviarNotificaciones(String messageBody, Bitmap image,String url) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0 , intent, PendingIntent.FLAG_ONE_SHOT);

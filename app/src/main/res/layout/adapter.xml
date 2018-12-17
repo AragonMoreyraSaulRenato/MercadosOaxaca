@@ -35,7 +35,8 @@
                 android:id="@+id/ver"
                 android:layout_width="267dp"
                 android:layout_height="204dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:background="@drawable/extra" />
 
         </LinearLayout>
 

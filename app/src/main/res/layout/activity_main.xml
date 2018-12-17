@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
-            android:text="MERCADOS DE OAXACA"
+            android:text="MERCADOS DE OAXACA de juarez "
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="30sp" />
@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="Los mercados de Oaxaca ofrecen una delicia para todos los sentidos. Caminar por los mercados de la ciudad se convierte en toda una aventura de sabores, olores, texturas y colores que difícilmente pueden apreciarse en otros lugares de México. "
-            android:textAlignment="center"
+            android:gravity="left"
             android:textColor="@color/colornegro"
-            android:textSize="19sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btntutorial"
@@ -60,5 +60,4 @@
         android:paddingStart="@dimen/card_padding">
 
     </android.support.v4.view.ViewPager>
-
 </android.support.design.widget.CoordinatorLayout>
