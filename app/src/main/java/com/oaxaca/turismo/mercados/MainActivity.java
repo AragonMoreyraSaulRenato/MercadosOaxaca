@@ -12,8 +12,8 @@ import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
-    //static String base_url = "http://hernandezislasadrian.000webhostapp.com/";
-    static String base_url = "http://www.mercadosoaxacadejuarez.com/";
+    static String base_url = "http://hernandezislasadrian.000webhostapp.com/";
+    //static String base_url = "http://www.mercadosoaxacadejuarez.com/";
     static String llave="r5da3dfd0dssw4hfohu9fdgrv14";
 
 

@@ -29,6 +29,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 
@@ -191,7 +193,7 @@ public class SlideshowDialogFragment extends DialogFragment {
                     .into(imageViewPreview);
 
 
-
+            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(imageViewPreview);
             container.addView(view);
 
             return view;

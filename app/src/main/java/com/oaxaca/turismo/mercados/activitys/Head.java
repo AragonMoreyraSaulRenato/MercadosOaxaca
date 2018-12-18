@@ -21,7 +21,7 @@ public class Head extends Fragment {
     private TextView name,address,horario;
     private CircleImageView logo;
     private Typeface font;
-    private JustifiedTextView history;
+    private TextView history;
     private Mercado mercado;
     private ProgressDialog pDialog;
     @Nullable
@@ -29,7 +29,7 @@ public class Head extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.head, container, false);
         name        = (TextView)view.findViewById(R.id.nameMarket);
-        history    = (JustifiedTextView) view.findViewById(R.id.history);
+        history    = (TextView) view.findViewById(R.id.history);
         address     = (TextView)view.findViewById(R.id.address);
         logo= (CircleImageView) view.findViewById(R.id.logo);
         horario = (TextView) view.findViewById(R.id.hora);
