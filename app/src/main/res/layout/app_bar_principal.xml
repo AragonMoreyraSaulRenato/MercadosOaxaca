@@ -40,7 +40,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sansregular"
                         android:icon="@drawable/text_lines"
-                        android:text="Informacion" />
+                        android:text="Acerca de" />
 
                     <android.support.design.widget.TabItem
                         android:id="@+id/galeri"
@@ -84,5 +84,17 @@
         app:elevation="6dp"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_comollegar" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/map"
+        android:layout_width="82dp"
+        android:layout_height="67dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        app:backgroundTint="@color/colorBlanco"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/ic_map" />
 
 </android.support.design.widget.CoordinatorLayout>

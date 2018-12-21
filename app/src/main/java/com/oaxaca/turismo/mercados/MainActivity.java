@@ -4,21 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-
+import com.oaxaca.turismo.mercados.clases.GoogleService;
 import com.oaxaca.turismo.mercados.conexion.Peticiones;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
-    static String base_url = "http://hernandezislasadrian.000webhostapp.com/";
-    //static String base_url = "http://www.mercadosoaxacadejuarez.com/";
-    static String llave="r5da3dfd0dssw4hfohu9fdgrv14";
+    public static String base_url = "http://192.168.0.13/";
+    public static String llave="12345678";
 
-
+    //290782SAAdrian
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         Thread hilo = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -36,13 +37,15 @@ public class MainActivity extends AppCompatActivity {
                 principal.lista=peticion.getJSON();
                 MenuActivity.listam=peticion.getJSON();
                 MenuActivity.urlimg=peticion2.getJSON();
-
+                GoogleService.listam=peticion.getJSON();
+                GoogleService.urlimg=peticion2.getJSON();
                 Intent intent = null;
                 if(MenuActivity.listam!=null && MenuActivity.urlimg!=null )
                 {
-                    intent = new Intent(getApplicationContext(), MenuActivity.class);
-                    startActivity(intent);
-                    finish();
+                        intent = new Intent(getApplicationContext(), MenuActivity.class);
+                        startActivity(intent);
+                        finish();
+
                 }
                 else{
 
@@ -74,4 +77,6 @@ public class MainActivity extends AppCompatActivity {
     public static String getLlave(){
         return llave;
     }
+
+
 }

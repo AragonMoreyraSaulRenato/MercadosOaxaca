@@ -87,11 +87,9 @@ public class Gallery extends Fragment {
         for (int i = 0; i < im.size(); i++) {
             try {
                 Image image = new Image();
-                image.setName(" ");
                 image.setSmall(im.get(i));
                 image.setMedium(im.get(i));
                 image.setLarge(im.get(i));
-                image.setTimestamp(" ");
                 images.add(image);
             } catch (Exception e) {
                 e.printStackTrace();

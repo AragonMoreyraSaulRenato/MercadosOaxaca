@@ -39,7 +39,7 @@ public class SlideshowDialogFragment extends DialogFragment {
     private ArrayList<Image> images;
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
-    private TextView lblCount, lblTitle, lblDate;
+    private TextView lblCount;
     private int selectedPosition = 0;
     String setImgLink = "";
     ImageView share, download;
@@ -55,11 +55,9 @@ public class SlideshowDialogFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.fragment_image_slider, container, false);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
         lblCount = (TextView) v.findViewById(R.id.lbl_count);
-        lblTitle = (TextView) v.findViewById(R.id.title);
-        lblDate = (TextView) v.findViewById(R.id.date);
 
-       // share = (ImageView) v.findViewById(R.id.share);
-       // download = (ImageView) v.findViewById(R.id.download);
+        // share = (ImageView) v.findViewById(R.id.share);
+        // download = (ImageView) v.findViewById(R.id.download);
 
         final ImageView imageViewPreview = (ImageView) v.findViewById(R.id.image_preview);
 
@@ -152,9 +150,7 @@ public class SlideshowDialogFragment extends DialogFragment {
         lblCount.setText((position + 1) + " de " + images.size());
 
         Image image = images.get(position);
-        lblTitle.setText(image.getName());
         setImgLink = image.getLarge().toString();
-        lblDate.setText(image.getTimestamp());
     }
 
     @Override

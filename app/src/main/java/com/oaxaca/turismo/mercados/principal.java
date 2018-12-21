@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.oaxaca.turismo.mercados.activitys.Gallery;
 import com.oaxaca.turismo.mercados.activitys.Head;
 import com.oaxaca.turismo.mercados.activitys.Lista;
+import com.oaxaca.turismo.mercados.activitys.Mapa;
 import com.oaxaca.turismo.mercados.adapter.Adaptador_ListaExpandible;
 import com.oaxaca.turismo.mercados.clases.Categoria;
 import com.oaxaca.turismo.mercados.clases.Local;
@@ -45,6 +46,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.oaxaca.turismo.mercados.MainActivity.base_url;
+import static com.oaxaca.turismo.mercados.MainActivity.llave;
+
 public class principal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //variables ocupadas;
@@ -58,11 +63,10 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
     static JSONObject infomer;
     static JSONObject galeri;
     static JSONObject giros;
-    private double lo=-96.727260,la=17.057874;
-    String seleccionado;
+    static double lo=-96.727260,la=17.057874;
+    static String seleccionado;
     int selecc;
     String nombreMercado;
-    NotificationManager nm;
     Head comi;
     Gallery comi2;
     Lista comi3;
@@ -72,7 +76,6 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-        nm= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -94,9 +97,12 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        obtenerlosmercadosparaelmenu();
-        botonesflotantes();
 
+
+        obtenerlosmercadosparaelmenu();
+
+        botonesflotantes();
+        botonMapa();
         mContext = getApplicationContext();
 
         comi = new Head() ;
@@ -125,6 +131,26 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
         });
     }
 
+    public void botonMapa(){
+
+        FloatingActionButton nuevo= (FloatingActionButton) findViewById(R.id.map);
+        nuevo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapita = new Intent(principal.this,Mapa.class);
+                startActivity(mapita);
+
+
+                try {
+                    Toast.makeText(getApplicationContext(),"Mapa del mercado.",Toast.LENGTH_LONG).show();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(),"Falló la visualización del mapa.",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -140,7 +166,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //esto era para poner los tres puntitos
-        //getMenuInflater().inflate(R.menu.principal, menu);
+        getMenuInflater().inflate(R.menu.principal, menu);
         return true;
     }
 
@@ -194,6 +220,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
     int i=0;
 
 
+
     boolean bandera = true;
 
     //metodo que controla el funcionamiento de la barra de navegacion
@@ -218,6 +245,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
 
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
+
                     seleccionado=model.getMenuName();
                     for(int i=0; i<mercadostotal.size(); i++) {
                         for (int j = 0; j < mercadostotal.get(i).getMercados().size(); j++) {
@@ -297,6 +325,7 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
 
 
 
+
     private ArrayList<Zonas> mercadostotal;
 
     private void obtenerlosmercadosparaelmenu(){
@@ -320,8 +349,8 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
                     case "P": zona="Zona Poniente";break;
                 }
 
-                Double latitudm = obj_dato.getDouble("latitud");
-                Double longitudm = obj_dato.getDouble("longitud");
+                double latitudm = obj_dato.getDouble("latitud");
+                double longitudm = obj_dato.getDouble("longitud");
                 Mercado temp = new Mercado(id_m, nombre, zona, latitudm, longitudm);
 
                 mercadostt.add(temp);
@@ -373,7 +402,8 @@ public class principal extends AppCompatActivity implements NavigationView.OnNav
             m = new Mercado(obj_dato.getString("nombre"),
                     obj_dato.getString("historia"),
                     obj_dato.getString("direccion"),
-                    obj_dato.getString("horario"),
+                    obj_dato.getString("horaA"),
+                    obj_dato.getString("horaC"),
                     obj_dato.getString("imagen"));
         }catch (Exception ex){
 

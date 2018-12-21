@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MercadosO</string>
+    <string name="app_name">Mercados Oaxaca</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -15,6 +15,9 @@
     <string name="error_conexion">Verifique su conexión a internet</string>
     <string name="instala_nave">No se reconoce alguna aplicación de mapas </string>
     <string name="texto_inicial">¿A dónde será tu siguiente aventura?</string>
+    <string name="default_notification_channel_id">default_channel_id</string>
+    <string name="default_notification_channel_title">Default Channel</string>
+    <string name="title_activity_image_profile">image_profile</string>
 
 
 </resources>

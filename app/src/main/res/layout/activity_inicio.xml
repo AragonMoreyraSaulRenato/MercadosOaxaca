@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ConstraintLayout"
@@ -257,19 +258,19 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/faceicon"/>
+                        android:src="@drawable/faceicon"/>
                     <ImageButton
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/instaicon"/>
+                        android:src="@drawable/instaicon"/>
                     <ImageButton
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/gmailicon"/>
+                        android:src="@drawable/gmailicon"/>
 
                 </LinearLayout>
             </LinearLayout>

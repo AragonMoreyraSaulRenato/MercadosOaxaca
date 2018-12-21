@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -24,10 +26,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainActivity2"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.splashh">
+        </activity>
+
         <activity
             android:name=".principal"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activitys.profile"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Profile" />
+        <activity
+            android:name=".activitys.Mapa"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activitys.Activity_Local"
             android:screenOrientation="portrait"
@@ -49,6 +66,7 @@
             </intent-filter>
         </service>
 
+        <service android:name=".clases.GoogleService"></service>
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@ public class Mercado  {
     private Double latitud,longitud;
     private String historia;
     private String direccion;
-    private String hora;
+    private String horaA, horaC;
     private String imag;
 
     public Mercado (int id_mercado,String nombre,String zona,Double latitud,Double longitud){
@@ -26,11 +26,12 @@ public class Mercado  {
         this.longitud=longitud;
     }
 
-    public Mercado(String nombre, String historia, String direccion, String hora, String imag) {
+    public Mercado(String nombre, String historia, String direccion, String horaA,String horaC, String imag) {
         this.nombre = nombre;
         this.historia = historia;
         this.direccion = direccion;
-        this.hora = hora;
+        this.horaA = horaA;
+        this.horaC = horaC;
         this.imag = imag;
     }
 
@@ -75,12 +76,18 @@ public class Mercado  {
         return imag;
     }
 
-    public String getHora() {
-        return hora;
+    public String getHoraA() {   return horaA;    }
+
+    public void setHoraA(String hora) {
+        this.horaA = hora;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public String getHoraC() {
+        return horaC;
+    }
+
+    public void setHoraC(String hora) {
+        this.horaC = hora;
     }
 
 }

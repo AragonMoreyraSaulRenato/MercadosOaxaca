@@ -1,96 +1,78 @@
 package com.oaxaca.turismo.mercados.clases;
 
-
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.bumptech.glide.Glide;
+import com.oaxaca.turismo.mercados.MainActivity;
+import com.oaxaca.turismo.mercados.clases.NotificationUtils;
+import com.oaxaca.turismo.mercados.clases.NotificationVO;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.oaxaca.turismo.mercados.MainActivity;
-import com.oaxaca.turismo.mercados.R;
-import com.oaxaca.turismo.mercados.conexion.VolleySingleton;
 
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    Bitmap bitmap;
-    /**
-     * se llama cuando se recibe un mensaje
-     * @param remoteMessage Object representa el mensaje recibido de  Firebase Cloud Messaging.
-     */
+    private static final String TAG = "MyFirebaseMsgingService";
+    private static final String TITLE = "title";
+    private static final String EMPTY = "";
+    private static final String MESSAGE = "message";
+    private static final String IMAGE = "image";
+    private static final String ACTION = "action";
+    private static final String DATA = "data";
+    private static final String ACTION_DESTINATION = "action_destination";
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        String mensaje = remoteMessage.getData().get("mensaje");
-        String imagenUri = remoteMessage.getData().get("imagen");
-        //Para obtener el Bitmap de la imagen desde la URL recibida
-        try {
-            bitmap = getBitmapfromUrl(imagenUri);
-            enviarNotificaciones(mensaje, bitmap,imagenUri);
-        }catch (Exception e){
-        }
+
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
+
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Map<String, String> data = remoteMessage.getData();
+            handleData(data);
+
+        } else if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            handleNotification(remoteMessage.getNotification());
+        }// Check if message contains a notification payload.
+
     }
 
+    private void handleNotification(RemoteMessage.Notification RemoteMsgNotification) {
+        String message = RemoteMsgNotification.getBody();
+        String title = RemoteMsgNotification.getTitle();
+        NotificationVO notificationVO = new NotificationVO();
+        notificationVO.setTitle(title);
+        notificationVO.setMessage(message);
 
-    /**
-     * Crear y mostrar una simple notificacion con el contenido del mensaje FCM.
-     */
-
-    private void enviarNotificaciones(String messageBody, Bitmap image,String url) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0 , intent, PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Notification.Builder notificationBuilder = new Notification.Builder(getApplicationContext())
-                .setLargeIcon(image)/*Icono de la Notificacion*/
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle(messageBody)
-                .setStyle(new Notification.BigPictureStyle()
-                        .bigPicture(image))/*Imagen de la Notificacion*/
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(100 , notificationBuilder.build());
+        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+       // notificationUtils.displayNotification(notificationVO, resultIntent);
+        notificationUtils.createNotification(notificationVO,resultIntent,getApplicationContext());
+        notificationUtils.playNotificationSound();
     }
 
-    /*
-     *Para obtener el Bitmap de la imagen segun el URL recibido
-     * */
-    public Bitmap getBitmapfromUrl(String imageUrl) {
-        try {
-            URL url = new URL(imageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(input);
-            return bitmap;
+    private void handleData(Map<String, String> data) {
+        String title = data.get(TITLE);
+        String message = data.get(MESSAGE);
+        String iconUrl = data.get(IMAGE);
+        String action = data.get(ACTION);
+        String actionDestination = data.get(ACTION_DESTINATION);
+        //de aqui
+        NotificationVO notificationVO = new NotificationVO();
+        notificationVO.setTitle(title);
+        notificationVO.setMessage(message);
+        notificationVO.setIconUrl(iconUrl);
+        notificationVO.setAction(action);
+        notificationVO.setActionDestination(actionDestination);
 
-        } catch (Exception e) {
-            return null;
-        }
+        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+
+        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+       // notificationUtils.displayNotification(notificationVO, resultIntent);
+        notificationUtils.createNotification(notificationVO,resultIntent,getApplicationContext());
+        notificationUtils.playNotificationSound();
+
     }
-
 }

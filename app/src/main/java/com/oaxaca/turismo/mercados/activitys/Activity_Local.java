@@ -1,5 +1,6 @@
 package com.oaxaca.turismo.mercados.activitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
-import com.oaxaca.turismo.mercados.MainActivity;
 import com.oaxaca.turismo.mercados.R;
 import com.oaxaca.turismo.mercados.adapter.RecyclerViewAdapter;
 import com.oaxaca.turismo.mercados.clases.Categoria;
@@ -24,7 +24,7 @@ public class Activity_Local extends AppCompatActivity {
     static Categoria categoria;
 
 
-    static int c=0;
+    public static int c=0;
 
     private ExpandableTextView expTv1;
     private ExpandableTextView expTv2;
@@ -67,6 +67,15 @@ public class Activity_Local extends AppCompatActivity {
 
         refresh();
 
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplication(), profile.class);
+                i.putExtra("url",categoria.getLocales().get(c).getImageUrl());
+                i.putExtra("name", categoria.getLocales().get(c).getNombre()+"");
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -74,7 +83,6 @@ public class Activity_Local extends AppCompatActivity {
 
     public void refresh() {
         String img =categoria.getLocales().get(c).getImageUrl();
-        System.out.println("LOCAL: "+MainActivity.getBase_url()+img);
         if(img.contains("null") || img == null){
             circleImageView.setImageResource(R.mipmap.ic_launcher);
         }else {

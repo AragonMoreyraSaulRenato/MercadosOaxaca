@@ -87,17 +87,21 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         titleTextView.setText(item.getTitle());
         final ImageButton button = (ImageButton) view.findViewById(R.id.ver);
 
-        Glide.with(estees).asBitmap().load(item.getUrlimagen()).into(button);
+        String im = item.getUrlimagen();
+
+        if(im!= null)
+            Glide.with(estees).asBitmap().load(im).into(button);
+
         final int nnumeroid = item.getIdmercado();
 
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if(bandera){
-                        bandera=false;
-                        hacerprti(nnumeroid);
-                    }
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(bandera){
+                    bandera=false;
+                    hacerprti(nnumeroid);
                 }
-            });
+            }
+        });
 
 
 
